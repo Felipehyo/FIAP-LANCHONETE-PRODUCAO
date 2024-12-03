@@ -112,6 +112,12 @@
             <scope>runtime</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.12</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -121,40 +127,59 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <!-- Plugin do JaCoCo -->
+<!--            <plugin>-->
+<!--                <groupId>org.jacoco</groupId>-->
+<!--                <artifactId>jacoco-maven-plugin</artifactId>-->
+<!--                <version>0.8.10</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <goals>-->
+<!--                            <goal>prepare-agent</goal>-->
+<!--                            <goal>report</goal>-->
+<!--&lt;!&ndash;                            <goal>check</goal>&ndash;&gt;-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--                <configuration>-->
+<!--                    <excludes>-->
+<!--                        <exclude>com/postech/domain/**</exclude>-->
+<!--                        <exclude>com/postech/infra/mappers/**</exclude>-->
+<!--                        <exclude>com/postech/infra/dto/**</exclude>-->
+<!--                        <exclude>com/postech/infra/persistence/**</exclude>-->
+<!--                        <exclude>com/postech/infra/Application*</exclude>-->
+<!--                    </excludes>-->
+<!--                    <rules>-->
+<!--                        <rule>-->
+<!--                            <element>CLASS</element>-->
+<!--                            <limits>-->
+<!--                                <limit>-->
+<!--                                    <counter>INSTRUCTION</counter>-->
+<!--                                    <value>COVEREDRATIO</value>-->
+<!--                                    <minimum>0.80</minimum>-->
+<!--                                </limit>-->
+<!--                            </limits>-->
+<!--                        </rule>-->
+<!--                    </rules>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.10</version>
+                <version>0.8.12</version>
                 <executions>
                     <execution>
                         <goals>
                             <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>verify</phase>
+                        <goals>
                             <goal>report</goal>
-<!--                            <goal>check</goal>-->
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <excludes>
-                        <exclude>com/postech/domain/**</exclude>
-                        <exclude>com/postech/infra/mappers/**</exclude>
-                        <exclude>com/postech/infra/dto/**</exclude>
-                        <exclude>com/postech/infra/persistence/**</exclude>
-                        <exclude>com/postech/infra/Application*</exclude>
-                    </excludes>
-                    <rules>
-                        <rule>
-                            <element>CLASS</element>
-                            <limits>
-                                <limit>
-                                    <counter>INSTRUCTION</counter>
-                                    <value>COVEREDRATIO</value>
-                                    <minimum>0.80</minimum>
-                                </limit>
-                            </limits>
-                        </rule>
-                    </rules>
-                </configuration>
             </plugin>
         </plugins>
     </build>
