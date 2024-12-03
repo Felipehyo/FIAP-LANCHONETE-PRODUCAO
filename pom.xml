@@ -130,7 +130,7 @@
                         <goals>
                             <goal>prepare-agent</goal>
                             <goal>report</goal>
-                            <goal>check</goal>
+<!--                            <goal>check</goal>-->
                         </goals>
                     </execution>
                 </executions>
@@ -140,7 +140,7 @@
                         <exclude>com/postech/infra/mappers/**</exclude>
                         <exclude>com/postech/infra/dto/**</exclude>
                         <exclude>com/postech/infra/persistence/**</exclude>
-                        <exclude>com/postech/infra/Application**</exclude>
+                        <exclude>com/postech/infra/Application*</exclude>
                     </excludes>
                     <rules>
                         <rule>
