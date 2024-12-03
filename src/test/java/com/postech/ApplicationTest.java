@@ -10,6 +10,11 @@ public class ApplicationTest {
 
     @Test
     void contextLoads() {
-//        Application.main(new String[] {});
     }
+
+//    @Test
+//    void mainRuns() {
+//        Application.main(new String[]{});
+//    }
+
 }
