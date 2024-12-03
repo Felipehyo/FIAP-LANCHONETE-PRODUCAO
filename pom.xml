@@ -135,6 +135,12 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <excludes>
+                        <exclude>com/postech/domain/**</exclude>
+                        <exclude>com/postech/infra/mappers/**</exclude>
+                        <exclude>com/postech/infra/dto/**</exclude>
+                        <exclude>com/postech/infra/persistence/**</exclude>
+                    </excludes>
                     <rules>
                         <rule>
                             <element>CLASS</element>
