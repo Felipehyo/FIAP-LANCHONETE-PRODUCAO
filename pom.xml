@@ -140,6 +140,7 @@
                         <exclude>com/postech/infra/mappers/**</exclude>
                         <exclude>com/postech/infra/dto/**</exclude>
                         <exclude>com/postech/infra/persistence/**</exclude>
+                        <exclude>com/postech/infra/Application*</exclude>
                     </excludes>
                     <rules>
                         <rule>
