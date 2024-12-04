@@ -1,7 +1,7 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: hpa-restaurant-application
+  name: hpa-producao-application
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
