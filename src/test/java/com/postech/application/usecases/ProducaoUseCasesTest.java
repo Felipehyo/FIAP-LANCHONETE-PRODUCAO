@@ -41,7 +41,7 @@ public class ProducaoUseCasesTest {
         Long pedidoId = 1L;
 
         when(repositorio.buscarPorPedidoId(pedidoId)).thenReturn(null);
-        when(pedidoClient.consultarStatusPedido(pedidoId)).thenReturn(EstadoPedidoEnum.RECEBIDO);
+        when(pedidoClient.consultarStatusPedido(pedidoId)).thenReturn(EstadoPedidoEnum.PAGO);
         Producao producaoSalva = new Producao(pedidoId, LocalDateTime.now());
         when(repositorio.salvar(any(Producao.class))).thenReturn(producaoSalva);
 
@@ -71,7 +71,7 @@ public class ProducaoUseCasesTest {
         Long pedidoId = 1L;
 
         when(repositorio.buscarPorPedidoId(pedidoId)).thenReturn(null);
-        when(pedidoClient.consultarStatusPedido(pedidoId)).thenReturn(EstadoPedidoEnum.RECEBIDO);
+        when(pedidoClient.consultarStatusPedido(pedidoId)).thenReturn(EstadoPedidoEnum.PAGO);
         doThrow(new RuntimeException()).when(pedidoClient).atualizarEstadoPorPedidoId(pedidoId, EstadoPedidoEnum.PREPARANDO);
 
         PedidoException exception = assertThrows(PedidoException.class, () ->
