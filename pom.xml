@@ -11,8 +11,8 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>br.com.fiap</groupId>
-    <artifactId>tech-challenge</artifactId>
+    <groupId>com.postech</groupId>
+    <artifactId>fiap-lanchonete-producao</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
