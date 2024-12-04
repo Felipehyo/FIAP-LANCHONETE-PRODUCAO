@@ -66,3 +66,8 @@ O retorno do finalização do preparo do pedido com sucesso será:
     "tempoTotalPreparo": "00:00:11"
 }
 ```
+
+## Cobertura de testes utilizando o sonar cloud
+
+![Cobertura de testes pelo sonar](assets/coverage.png)
+![Detalhe da Cobertura de testes pelo sonar](assets/coverage-detail.png)
