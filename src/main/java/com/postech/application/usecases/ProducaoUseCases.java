@@ -37,7 +37,7 @@ public class ProducaoUseCases {
 
         if (status == null) {
             throw new PedidoException(ErroPedidoEnum.PEDIDO_NAO_ENCONTRADO);
-        } else if (status != EstadoPedidoEnum.RECEBIDO) {
+        } else if (status != EstadoPedidoEnum.PAGO) {
             throw new ProducaoException(ErroProducaoEnum.PREPARO_INVALIDO);
         }
 
