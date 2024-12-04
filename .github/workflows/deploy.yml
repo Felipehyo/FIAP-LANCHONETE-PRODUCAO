@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  create-ecr:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -44,35 +44,18 @@ jobs:
         run: |
           docker push ${{ secrets.ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
 
-  deploy-prod:
-    runs-on: ubuntu-latest
-
-    steps:
-
-      # Step 1: Fazer o checkout do repositório
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      # Step 2: Configurar credenciais da AWS
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v3
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-
-      # Step 3: Instalar kubectl na versão do cluster eks criado
+      # Step 7: Instalar kubectl na versão do cluster eks criado
       - name: Install kubectl
         uses: azure/setup-kubectl@v3
         with:
           version: 'v1.31.0'
 
-      # Step 4: Configuração do kubernates
+      # Step 8: Configuração do kubernates
       - name: Set up kubeconfig
         run: |
           aws eks --region ${{ secrets.AWS_REGION }} update-kubeconfig --name ${{ secrets.EKS_CLUSTER }}
 
-      # Step 5: Setar valores das variáveis nos arquivos do Kubernetes
+      # Step 9: Setar valores das variáveis nos arquivos do Kubernetes
       - name: Replace environment variables in k8s files
         run: |
           sed -i "s/{{DB_URL}}/${{ secrets.DB_URL }}/g" k8s/secret-postgres-db.yaml
@@ -84,25 +67,25 @@ jobs:
           sed -i "s/{{AWS_REGION}}/${{ secrets.AWS_REGION }}/g" k8s/deployment.yaml
           sed -i "s/{{ECR_REPOSITORY}}/${{ secrets.ECR_REPOSITORY }}/g" k8s/deployment.yaml
 
-      # Step 6: Aplicar secrets no Kubernetes
+      # Step 10: Aplicar secrets no Kubernetes
       - name: Apply Kubernetes secrets
         run: |
           kubectl apply -f k8s/secret-postgres-db.yaml
 
-      # Step 7: Deletar os pods existentes para forçar a criação de novos
+      # Step 11: Deletar os pods existentes para forçar a criação de novos
       - name: Delete existing pods
         run: |
-          kubectl delete pod -l app=deployment-producao-application
+          kubectl delete pod -l app=deployment-restaurant-application
 
-      # Step 8: Realizar deploy de imagem do ecs no cluster eks
+      # Step 12: Realizar deploy de imagem do ecs no cluster eks
       - name: Deploy to Kubernetes
         run: |
           kubectl apply -f k8s/deployment.yaml
           kubectl apply -f k8s/svc-restaurant-application.yaml
           kubectl apply -f k8s/hpa.yaml
-          kubectl set image deployment/deployment-producao-application deployment-producao-application=${{ secrets.ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
+          kubectl set image deployment/deployment-restaurant-application deployment-restaurant-application=${{ secrets.ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
 
-      # Step 9: Esperar até que o LoadBalancer seja criado
+      # Step 13: Esperar até que o LoadBalancer seja criado
       - name: Wait for LoadBalancer
         run: |
           while [[ -z $(kubectl get svc restaurant-application-service -o jsonpath='{.status.loadBalancer.ingress[0].hostname}') ]]; do
@@ -110,7 +93,7 @@ jobs:
             sleep 10
           done
 
-      # Step 10: Obter URL do LoadBalancer
+      # Step 14: Obter URL do LoadBalancer
       - name: Get LoadBalancer URL
         run: |
           LOAD_BALANCER_URL=$(kubectl get svc restaurant-application-service -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
